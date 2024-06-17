@@ -20,28 +20,27 @@ $app->get("/admin/products", function(){
 
 $app->get("/admin/products/create", function(){
 
-    User::verifyLogin();   
+	User::verifyLogin();
 
-    $page = new PageAdmin();
+	$page = new PageAdmin();
 
-    $page->setTpl("products-create");
+	$page->setTpl("products-create");
 
 });
 
 $app->post("/admin/products/create", function(){
 
-    User::verifyLogin();  
+	User::verifyLogin();
 
-    $product = new Product();
+	$product = new Product();
 
-    $product->setData($_POST);
+	$product->setData($_POST);
 
-    $product->save();
+	$product->save();
 
-    if($_FILES["file"]["name"] !== "") $product->setPhoto($_FILES['file']);
+	header("Location: /admin/products");
+	exit;
 
-    header("Location: /admin/products");
-    exit;
 });
 
 $app->get("/admin/products/:idproduct", function($idproduct){
@@ -72,7 +71,7 @@ $app->post("/admin/products/:idproduct", function($idproduct){
 
 	$product->save();
 
-    if($_FILES["file"]["name"] !== "") $product->setPhoto($_FILES["file"]);
+	$product->setPhoto($_FILES["file"]);
 
 	header('Location: /admin/products');
 	exit;
@@ -87,9 +86,11 @@ $app->get("/admin/products/:idproduct/delete", function($idproduct){
 
 	$product->get((int)$idproduct);
 
-    $product->delete();
+	$product->delete();
 
-    header('Location: /admin/products');
+	header('Location: /admin/products');
 	exit;
-        
+
 });
+
+ ?>
