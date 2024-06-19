@@ -82,7 +82,7 @@ $app->get("/admin/products/:idproduct/delete", function($idproduct){
 
 	User::verifyLogin();
 
-	$product = new Product();
+	$product = new product();
 
 	$product->get((int)$idproduct);
 

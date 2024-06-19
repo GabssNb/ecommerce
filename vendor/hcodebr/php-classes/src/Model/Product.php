@@ -17,7 +17,6 @@ class Product extends Model
 		return $sql->select("SELECT * FROM tb_products ORDER BY desproduct");
 	}
 
-
 	public static function checkList($list)
 	{
 
@@ -85,7 +84,6 @@ class Product extends Model
 		)) {
 
 			$url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
-			
 		} else {
 
 			$url = "/res/site/img/product.jpg";
