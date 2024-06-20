@@ -1,6 +1,6 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <!--
-    Hcode Store by hcode.com.br
+    Katze Store by Katze.com.br
 -->
 <html lang="pt-br">
   <head>
