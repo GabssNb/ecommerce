@@ -7,9 +7,9 @@
                     <h2>Katze Store</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
                     <div class="footer-social">
-                        <a href="https://www.facebook.com/hcodebr" target="_blank"><i class="fa fa-facebook"></i></a>
-                        <a href="https://twitter.com/hcodebr" target="_blank"><i class="fa fa-twitter"></i></a>
-                        <a href="https://www.youtube.com/channel/UCjWENuSH2gX55-y7QSZiWxA" target="_blank"><i class="fa fa-youtube"></i></a>
+                        <a href="mailto:gabriella.nbss@gmail.com" target="_blank"><i class="fa fa-google"></i></a>
+                        <a href="https://instagram.com/gabss.nb" target="_blank"><i class="fa fa-instagram"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=554588055748" target="_blank"><i class="fa fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy; 2017 Hcode Treinamentos. <a href="http://www.hcode.com.br" target="_blank">hcode.com.br</a></p>
+                    <p>&copy; 2024 Gabriella. <a href="https://github.com/goshimi" target="_blank">github.com/goshimi</a></p>
                 </div>
             </div>
             
