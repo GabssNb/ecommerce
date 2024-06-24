@@ -7,9 +7,9 @@
                     <h2>Katze Store</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
                     <div class="footer-social">
-                        <a href="mailto:gabriella.nbss@gmail.com" target="_blank"><i class="fa fa-google"></i></a>
+                        <a href="gabriella.nbss@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a>
                         <a href="https://instagram.com/gabss.nb" target="_blank"><i class="fa fa-instagram"></i></a>
-                        <a href="https://api.whatsapp.com/send?phone=554588055748" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=554588055748" target="_blank"><i class="fa fa-comments"></i></a>
                     </div>
                 </div>
             </div>
