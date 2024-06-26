@@ -217,9 +217,7 @@ class Cart extends Model
 			// Caso não haja produtos para calcular frete
 		}
 	}
-	
 
-	
 
 	public static function formatValueToDecimal($value): float
 	{
