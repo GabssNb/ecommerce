@@ -1,9 +1,13 @@
 <?php
 
 use \Hcode\Page;
+use \Hcode\Model\User;
 use \Hcode\Model\Cart;
+use \Hcode\Model\Order;
+use \Hcode\Model\Address;
 use \Hcode\Model\Product;
 use \Hcode\Model\Category;
+use \Hcode\Model\OrderStatus;
 
 $app->get('/', function () {
 
@@ -111,7 +115,7 @@ $app->get("/cart/:idproduct/minus", function($idproduct){
 
 $app->get("/cart/:idproduct/remove", function($idproduct){
 
-	$product = new Product();
+	$product = new Product(false);
 
 	$product->get((int)$idproduct);
 
@@ -131,6 +135,50 @@ $app->post("/cart/freight", function() {
 	$cart->setFreight($_POST['zipcode']);
 
 	header("Location: /cart");
+	exit;
+
+});
+
+$app->get("/checkout", function(){
+
+	User::verifyLogin(false);
+
+	$cart = Cart::getFromSession();
+
+	$address = new Address();
+
+	$page = new Page();
+
+	$page->setTpl("checkout", [
+		'cart'=>$cart->getValues(),
+		'address'=>$address->getValues()
+	]);
+
+});
+
+$app->get("/login", function(){
+
+	$page = new Page();
+
+	$page->setTpl("login", [
+       'error'=>User::getError()
+    ]);
+
+});
+
+$app->post("/login", function(){
+
+	try {
+
+	    User::login($_POST['login'], $_POST['password']);
+
+	} catch(Exception $e) {
+
+		User::setError($e->getMessage());
+
+	}
+
+	header("Location: /checkout");
 	exit;
 
 });

@@ -179,55 +179,47 @@ class Cart extends Model
 
 	public function setFreight($nrzipcode)
 	{
-
 		$nrzipcode = str_replace('-', '', $nrzipcode);
-
+	
 		$totals = $this->getProductsTotals();
-
+	
 		if ($totals['nrqtd'] > 0) {
-
-			if ($totals['vlheight'] < 2) $totals['vlheight'] = 2;
-			if ($totals['vllength'] < 16) $totals['vllength'] = 16;
-
-			$qs = http_build_query([
-				'nCdEmpresa' => '',
-				'sDsSenha' => '',
-				'nCdServico' => '40010',
-				'sCepOrigem' => '09853120',
-				'sCepDestino' => $nrzipcode,
-				'nVlPeso' => $totals['vlweight'],
-				'nCdFormato' => '1',
-				'nVlComprimento' => $totals['vllength'],
-				'nVlAltura' => $totals['vlheight'],
-				'nVlLargura' => $totals['vlwidth'],
-				'nVlDiametro' => '0',
-				'sCdMaoPropria' => 'S',
-				'nVlValorDeclarado' => $totals['vlprice'],
-				'sCdAvisoRecebimento' => 'S'
-			]);
-
-			$xml = simplexml_load_file("http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?" . $qs);
-
-			$result = $xml->Servicos->cServico;
-
-			if ($result->MsgErro != '') {
-
-				Cart::setMsgError($result->MsgErro);
-			} else {
-
-				Cart::clearMsgError();
-			}
-
-			$this->setnrdays($result->PrazoEntrega);
-			$this->setvlfreight(Cart::formatValueToDecimal($result->Valor));
+			// Definição das variáveis
+			$vlweight = $totals['vlweight'];
+			$vllength = $totals['vllength'];
+			$vlheight = $totals['vlheight'];
+			$vlwidth = $totals['vlwidth'];
+			$vlprice = $totals['vlprice'];
+	
+			// Cálculo do frete baseado em regras fictícias (exemplo)
+			$freightPerProduct = 20; // Valor fixo por produto para o frete
+	
+			// Calculando o valor total do frete baseado na quantidade de produtos
+			$freight = $freightPerProduct * $totals['nrqtd'];
+	
+			// Simulação de prazo de entrega (exemplo)
+			$nrdays = 5; // Prazo fixo de entrega
+	
+			// Definição do CEP de destino e outras informações
+			$this->setnrdays($nrdays);
+			$this->setvlfreight($freight);
 			$this->setdeszipcode($nrzipcode);
-
+	
 			$this->save();
-
+	
+			// Retorno simulado como se fosse o resultado da API
+			$result = new \stdClass();
+			$result->Valor = $freight;
+			$result->PrazoEntrega = $nrdays;
+	
 			return $result;
 		} else {
+			// Caso não haja produtos para calcular frete
 		}
 	}
+	
+
+	
 
 	public static function formatValueToDecimal($value): float
 	{
@@ -257,7 +249,7 @@ class Cart extends Model
 
 		$_SESSION[Cart::SESSION_ERROR] = NULL;
 	}
-	
+
 	public function updateFreight()
 	{
 
@@ -286,4 +278,3 @@ class Cart extends Model
 		$this->setvltotal($totals['vlprice'] + (float)$this->getvlfreight());
 	}
 }
-
