@@ -2,9 +2,8 @@
 
 namespace Hcode\Model;
 
-
-use \Hcode\Model;
 use \Hcode\DB\Sql;
+use \Hcode\Model;
 use \Hcode\Mailer;
 
 class User extends Model
@@ -17,23 +16,17 @@ class User extends Model
 	const ERROR_REGISTER = "UserErrorRegister";
 	const SUCCESS = "UserSucesss";
 
-	protected $fields = [
-		"iduser", "idperson", "deslogin", "despassword", "inadmin", "dtergister"
-	];
-
 	public static function getFromSession()
-    {
+	{
 
-		$user =  new User();
+		$user = new User();
 
 		if (isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION]['iduser'] > 0) {
 
 			$user->setData($_SESSION[User::SESSION]);
-
 		}
 
 		return $user;
-
 	}
 
 	public static function checkLogin($inadmin = true)
@@ -46,41 +39,34 @@ class User extends Model
 			||
 			!(int)$_SESSION[User::SESSION]["iduser"] > 0
 		) {
-            //Não está logado
+			//Não está logado
 			return false;
-
 		} else {
 
-            if ($inadmin === true && (bool)$_SESSION[User::SESSION]['inadmin'] === true) {
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]['inadmin'] === true) {
 
 				return true;
+			} else if ($inadmin === false) {
 
+				return true;
+			} else {
+
+				return false;
 			}
-
-		} if ($inadmin === false) {
-
-			return true;
-
-		} else {
-
-			return false;
-
 		}
-
 	}
 
-	public static function login($login, $password): User
+	public static function login($login, $password)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = 
-		 :LOGIN", array( 
-		":LOGIN"=>$login 
-	    ));
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
+			":LOGIN" => $login
+		));
 
 		if (count($results) === 0) {
-			throw new \Exception("Não foi possível fazer login.");
+			throw new \Exception("Usuário inexistente ou senha inválida.");
 		}
 
 		$data = $results[0];
@@ -90,16 +76,13 @@ class User extends Model
 			$user = new User();
 
 			$data['desperson'] = mb_convert_encoding($data['desperson'], 'UTF-8', 'ISO-8859-1');
-
 			$user->setData($data);
 
 			$_SESSION[User::SESSION] = $user->getValues();
 
 			return $user;
 		} else {
-
-			throw new \Exception("Não foi possível fazer login.");
-
+			throw new \Exception("Usuário inexistente ou senha inválida.");
 		}
 	}
 
@@ -129,7 +112,6 @@ class User extends Model
 		$sql = new Sql();
 
 		return $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) ORDER BY b.desperson");
-
 	}
 
 	public function save()
@@ -138,17 +120,15 @@ class User extends Model
 		$sql = new Sql();
 
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
-			':desperson' => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
+			":desperson" => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
 			":deslogin" => $this->getdeslogin(),
 			":despassword" => User::getPasswordHash($this->getdespassword()),
 			":desemail" => $this->getdesemail(),
 			":nrphone" => $this->getnrphone(),
-			":inadmin" => $this->getinadmin(),
-
+			":inadmin" => $this->getinadmin()
 		));
 
 		$this->setData($results[0]);
-
 	}
 
 	public function get($iduser)
@@ -156,7 +136,7 @@ class User extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser;", array(
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser", array(
 			":iduser" => $iduser
 		));
 
@@ -165,76 +145,66 @@ class User extends Model
 		$data['desperson'] = mb_convert_encoding($data['desperson'], 'UTF-8', 'ISO-8859-1');
 
 		$this->setData($data);
-
 	}
-    
+
 	public function update()
-    {
+	{
 
-	$sql = new Sql();
+		$sql = new Sql();
 
-	$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, 
-	    :inadmin)", array(
-		":iduser"=>$this->getiduser(),
-		":desperson" => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
-		":deslogin" => $this->getdeslogin(),
-		":despassword" => User::getPasswordHash($this->getdespassword()),
-		":desemail" => $this->getdesemail(),
-		":nrphone" => $this->getnrphone(),
-		":inadmin" => $this->getinadmin()
-    ));
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
+			":iduser" => $this->getiduser(),
+			":desperson" => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
+			":deslogin" => $this->getdeslogin(),
+			":despassword" => User::getPasswordHash($this->getdespassword()),
+			":desemail" => $this->getdesemail(),
+			":nrphone" => $this->getnrphone(),
+			":inadmin" => $this->getinadmin()
+		));
 
-	$this->setData($results[0]);
-
-    }
+		$this->setData($results[0]);
+	}
 
 	public function delete()
 	{
 
-        $sql = new Sql();
-
-		$sql->query("CALL sp_users_delete(:iduser)", array(
-            ":iduser"=>$this->getiduser()
-		));
-
-	}
-
-    public static function getForgot($email, $inadmin = true)
-	{
- 
 		$sql = new Sql();
 
-		$results = $sql->select(
-		   "SELECT * 
-			FROM tb_persons a 
+		$sql->query("CALL sp_users_delete(:iduser)", array(
+			":iduser" => $this->getiduser()
+		));
+	}
+
+	public static function getForgot($email, $inadmin = true)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT *
+			FROM tb_persons a
 			INNER JOIN tb_users b USING(idperson)
 			WHERE a.desemail = :email;
 		", array(
-			":email"=>$email
+			":email" => $email
 		));
 
-		if (count($results) === 0)
-		{
-			throw new \Exception("Não foi possível recuperar a senha.");
-		}
-		else 
-		{
-            
-            $data = $results[0];
+		if (count($results) === 0) {
 
-            $results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
-				":iduser"=>$data["iduser"],
-				":desip"=>$_SERVER["REMOTE_ADDR"]
+			throw new \Exception("Não foi possível recuperar a senha.");
+		} else {
+
+			$data = $results[0];
+
+			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
+				":iduser" => $data['iduser'],
+				":desip" => $_SERVER['REMOTE_ADDR']
 			));
 
-			if (count($results2) === 0)
-			{
+			if (count($results2) === 0) {
 
-                throw new \Exception("Não foi possível recuperar a senha");
-				
-			}
-            else 
-			{
+				throw new \Exception("Não foi possível recuperar a senha.");
+			} else {
 
 				$dataRecovery = $results2[0];
 
@@ -255,9 +225,9 @@ class User extends Model
 					"link" => $link
 				));
 
+				$mailer->send();
 
 				return $link;
-				
 			}
 		}
 	}
@@ -294,15 +264,14 @@ class User extends Model
 		}
 	}
 
-    public static function setForgotUsed($idrecovery)
+	public static function setFogotUsed($idrecovery)
 	{
 
-		$sql= new Sql();
+		$sql = new Sql();
 
 		$sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery", array(
-			":idrecovery"=>$idrecovery
+			":idrecovery" => $idrecovery
 		));
-
 	}
 
 	public function setPassword($password)
@@ -311,10 +280,9 @@ class User extends Model
 		$sql = new Sql();
 
 		$sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
-			":password"=>$password,
-			":iduser"=>$this->getiduser()
+			":password" => $password,
+			":iduser" => $this->getiduser()
 		));
-
 	}
 
 	public static function setError($msg)
@@ -474,7 +442,6 @@ class User extends Model
 			'pages' => ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 	}
-
 }
 
 
