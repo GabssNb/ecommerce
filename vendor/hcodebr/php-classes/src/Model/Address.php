@@ -39,6 +39,7 @@ class Address extends Model
                 $this->setdesaddress($data['logradouro']);
                 $this->setdescomplement($data['complemento']);
                 $this->setdesdistrict($data['bairro']);
+                //$this->setnumber($data['logradouro']);
                 $this->setdescity($data['localidade']);
                 $this->setdesstate($data['uf']);
                 $this->setdescountry('Brasil');
@@ -53,13 +54,13 @@ class Address extends Model
     
             $results = $sql->select("CALL sp_addresses_save(:idaddress, :idperson, :desaddress, :desnumber, :descomplement, :descity, :desstate, :descountry, :deszipcode, :desdistrict)", [
                 ':idaddress' => $this->getidaddress(),
-                ':idperson' => $this->getidperson(),
-                ':desaddress' => utf8_decode($this->getdesaddress()),
+                ':idperson' => $this->getidperson(),   
+                ':desaddress' => mb_convert_encoding($this->getdesaddress(), 'ISO-8859-1', 'UTF-8'),
                 ':desnumber' => $this->getdesnumber(),
-                ':descomplement' => utf8_decode($this->getdescomplement()),
-                ':descity' => utf8_decode($this->getdescity()),
-                ':desstate' => utf8_decode($this->getdesstate()),
-                ':descountry' => utf8_decode($this->getdescountry()),
+                ':descomplement' => mb_convert_encoding($this->getdescomplement(), 'ISO-8859-1', 'UTF-8'),
+                ':descity' => mb_convert_encoding($this->getdescity(), 'ISO-8859-1', 'UTF-8'),
+                ':desstate' => mb_convert_encoding($this->getdesstate(), 'ISO-8859-1', 'UTF-8'),
+                ':descountry' => mb_convert_encoding($this->getdescountry(), 'ISO-8859-1', 'UTF-8'),
                 ':deszipcode' => $this->getdeszipcode(),
                 ':desdistrict' => $this->getdesdistrict()
             ]);
@@ -92,6 +93,3 @@ class Address extends Model
         }
     }
     
-
-
-
