@@ -44,10 +44,22 @@
 												<p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
 													<label class="" for="billing_address_1">Endereço <abbr title="required" class="required">*</abbr>
 													</label>
+<<<<<<< HEAD
 													<input type="text" value="<?php echo htmlspecialchars( $address["desaddress"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Logradouro, número e bairro" 
 													id="billing_address_1" name="desaddress" class="input-text ">
 												</p>
 											</div>
+=======
+													<input type="text" value="<?php echo htmlspecialchars( $address["desaddress"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Logradouro, número e bairro" id="billing_address_1" name="desaddress" class="input-text ">
+												</p>
+											</div>
+											<div class="col-sm-3">
+												<p id="billing_number_1_field" class="form-row form-row-wide number-field validate-required">
+													<label class="" for="billing_number_1">Número <abbr title="required" class="required">*</abbr>
+													</label>
+													<input type="text" value="<?php echo htmlspecialchars( $address["desnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Número" id="billing_address_1" name="desnumber" class="input-text ">
+												</p>
+>>>>>>> b9df92760badaee970f3693cc0b8cf46eba9a6ae
 											</div>
 										</div>
 										<p id="billing_address_2_field" class="form-row form-row-wide address-field">
@@ -94,6 +106,7 @@
                                                     </tr>
                                                     <?php } ?>
 
+<<<<<<< HEAD
 												</tbody>
 												<tfoot>
 													<tr class="cart-subtotal">
@@ -108,6 +121,8 @@
 
 															<input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
 														</td>
+=======
+>>>>>>> b9df92760badaee970f3693cc0b8cf46eba9a6ae
 													</tr>
 													<tr class="order-total">
 														<th>Total do Pedido</th>

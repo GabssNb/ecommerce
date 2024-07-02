@@ -144,7 +144,10 @@ $app->get("/checkout", function(){
 	User::verifyLogin(false);
 
 	$address = new Address();
+<<<<<<< HEAD
 
+=======
+>>>>>>> b9df92760badaee970f3693cc0b8cf46eba9a6ae
 	$cart = Cart::getFromSession();
 
 	if (!isset($_GET['zipcode'])) {
@@ -164,6 +167,10 @@ $app->get("/checkout", function(){
 	}
 
 	if (!$address->getdesaddress()) $address->setdesaddress('');
+<<<<<<< HEAD
+=======
+	if (!$address->getdesnumber()) $address->setdesnumber('');
+>>>>>>> b9df92760badaee970f3693cc0b8cf46eba9a6ae
 	if (!$address->getdescomplement()) $address->setdescomplement('');
 	if (!$address->getdesdistrict()) $address->setdesdistrict('');
 	if (!$address->getdescity()) $address->setdescity('');
@@ -233,10 +240,13 @@ $app->post("/checkout", function(){
 
 	$address->save();
 
+<<<<<<< HEAD
 	$cart = Cart::getFromSession();
 
 	$cart->getCalculateTotal();
 
+=======
+>>>>>>> b9df92760badaee970f3693cc0b8cf46eba9a6ae
 	header("Location: /order");
 	exit;
 
