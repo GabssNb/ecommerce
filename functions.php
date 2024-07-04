@@ -35,4 +35,24 @@ function getUserName()
 
 }
 
+function getCartNrQtd()
+{
+
+	$cart = Cart::getFromSession();
+
+	$totals = $cart ->getProductsTotals();
+
+	return $totals['nrqtd'];
+}
+
+function getCartVlsubtotal()
+{
+
+	$cart = Cart::getFromSession();
+
+	$totals = $cart ->getProductsTotals();
+
+	return formatPrice($totals['vlprice']);
+}
+
  ?>
