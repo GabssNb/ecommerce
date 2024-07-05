@@ -137,7 +137,7 @@ z-index: 999;}
     color: #fff;
 }
 .shopping-item:hover .product-count {
-    background: none repeat scroll 0 0 #000;
+    background: none repeat scroll 0 0 #2c2b2b;
 }
 
 
@@ -410,11 +410,11 @@ z-index: 999;}
     width: 80%;z-index: 99;transition: .4s;
 }
 .product-hover a:hover {
-  background: #000;
+  background: #bbbaba;
   text-decoration: none;border-color: #444;
 }
 .product-carousel-price ins {
-  color: #639bcf;
+  color: #000000;
   font-weight: 700;
   margin-right: 5px;
   text-decoration: none;
