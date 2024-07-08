@@ -1,26 +1,26 @@
-<?php 
+<?php
 
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
 use \Hcode\Model\Order;
-use Hcode\Model\OrderStatus;
+use \Hcode\Model\OrderStatus;
 
-$app->get("/admin/orders/:idorder/status", function($idorder) {
+$app->get("/admin/orders/:idorder/status", function($idorder){
 
-    User::verifyLogin();
+	User::verifyLogin();
 
-    $order = new Order;
+	$order = new Order();
 
-    $order->get((int)$idorder);
+	$order->get((int)$idorder);
 
-    $page = new PageAdmin();
+	$page = new PageAdmin();
 
-    $page->setTpl("order-status", [
-        'order'=>$order->getValues(),
-        'status'=>OrderStatus::listAll(),
-        'msgSuccess'=>Order::getSuccess(),
-        'msgError'=>Order::getError()
-    ]);
+	$page->setTpl("order-status", [
+		'order'=>$order->getValues(),
+		'status'=>OrderStatus::listAll(),
+		'msgSuccess'=>Order::getSuccess(),
+		'msgError'=>Order::getError()
+	]);
 
 });
 
@@ -49,50 +49,80 @@ $app->post("/admin/orders/:idorder/status", function($idorder){
 
 });
 
-$app->get("/admin/orders/:idorder/delete", function($idorder) {
-    
-    User::verifyLogin();
+$app->get("/admin/orders/:idorder/delete", function($idorder){
 
-    $order = new Order;
+	User::verifyLogin();
 
-    $order->get((int)$idorder);
+	$order = new Order();
 
-    $order->delete();
+	$order->get((int)$idorder);
 
-    header("Location: /admin/orders");
-    exit;
+	$order->delete();
+
+	header("Location: /admin/orders");
+	exit;
 
 });
 
-$app->get("/admin/orders/:idorder", function($idorder) {
+$app->get("/admin/orders/:idorder", function($idorder){
 
-    User::verifyLogin();
+	User::verifyLogin();
 
-    $order = new Order();
+	$order = new Order();
 
-    $order->get((int)$idorder);
+	$order->get((int)$idorder);
 
-    $cart = $order->getCart();
+	$cart = $order->getCart();
 
-    $page = new PageAdmin();
+	$page = new PageAdmin();
 
-    $page->setTpl("order", [
-        'order'=>$order->getValues(),
-        'cart'=>$cart->getValues(),
-        'products'=>$cart->getproducts()
-    ]);
+	$page->setTpl("order", [
+		'order'=>$order->getValues(),
+		'cart'=>$cart->getValues(),
+		'products'=>$cart->getProducts()
+	]);
 
 });
 
 $app->get("/admin/orders", function(){
 
-    User::verifyLogin();
+	User::verifyLogin();
 
-    $page = new PageAdmin;
-    
-    $page->setTpl("orders", [
-        'orders'=>Order::listAll()
-    ]);
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Order::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Order::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/admin/orders?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	$page = new PageAdmin();
+
+	$page->setTpl("orders", [
+		"orders"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
+	]);
 
 });
 

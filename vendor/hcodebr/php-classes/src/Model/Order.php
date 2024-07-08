@@ -36,7 +36,8 @@ class Order extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * 
+		$results = $sql->select("
+			SELECT * 
 			FROM tb_orders a 
 			INNER JOIN tb_ordersstatus b USING(idstatus) 
 			INNER JOIN tb_carts c USING(idcart)
@@ -58,7 +59,8 @@ class Order extends Model
 
 		$sql = new Sql();
 
-		return $sql->select("SELECT * 
+		return $sql->select("
+			SELECT * 
 			FROM tb_orders a 
 			INNER JOIN tb_ordersstatus b USING(idstatus) 
 			INNER JOIN tb_carts c USING(idcart)
@@ -140,7 +142,8 @@ class Order extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT SQL_CALC_FOUND_ROWS *
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_orders a 
 			INNER JOIN tb_ordersstatus b USING(idstatus) 
 			INNER JOIN tb_carts c USING(idcart)
@@ -167,7 +170,8 @@ class Order extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT SQL_CALC_FOUND_ROWS *
+		$results = $sql->select(
+		   "SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_orders a 
 			INNER JOIN tb_ordersstatus b USING(idstatus) 
 			INNER JOIN tb_carts c USING(idcart)
