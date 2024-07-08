@@ -3,11 +3,6 @@ session_start();
 require_once("vendor/autoload.php");
 
 use \Slim\Slim;
-use \Hcode\Page;
-use \Hcode\Model\Category;
-use \Hcode\PageAdmin;
-use \Hcode\Model\User;
-
 
 $app = new Slim();
 

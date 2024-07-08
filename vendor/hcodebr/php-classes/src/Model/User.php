@@ -75,7 +75,8 @@ class User extends Model
 
 			$user = new User();
 
-			$data['desperson'] = mb_convert_encoding($data['desperson'], 'UTF-8', 'ISO-8859-1');
+			$data['desperson'] = utf8_encode($data['desperson']);
+
 			$user->setData($data);
 
 			$_SESSION[User::SESSION] = $user->getValues();
@@ -120,7 +121,7 @@ class User extends Model
 		$sql = new Sql();
 
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
-			":desperson" => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
+			":desperson" => utf8_decode($this->getdesperson()),
 			":deslogin" => $this->getdeslogin(),
 			":despassword" => User::getPasswordHash($this->getdespassword()),
 			":desemail" => $this->getdesemail(),
@@ -142,7 +143,8 @@ class User extends Model
 
 		$data = $results[0];
 
-		$data['desperson'] = mb_convert_encoding($data['desperson'], 'UTF-8', 'ISO-8859-1');
+		$data['desperson'] = utf8_encode($data['desperson']);
+
 
 		$this->setData($data);
 	}
@@ -154,7 +156,7 @@ class User extends Model
 
 		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":iduser" => $this->getiduser(),
-			":desperson" => mb_convert_encoding($this->getdesperson(), 'ISO-8859-1', 'UTF-8'),
+			":desperson" => utf8_decode($this->getdesperson()),
 			":deslogin" => $this->getdeslogin(),
 			":despassword" => User::getPasswordHash($this->getdespassword()),
 			":desemail" => $this->getdesemail(),
@@ -214,13 +216,13 @@ class User extends Model
 
 				if ($inadmin === true) {
 
-					$link = "http://www.katzestore.com.br/admin/forgot/reset?code=$code";
+					$link = "http://www.hcodecommerce.com.br/admin/forgot/reset?code=$code";
 				} else {
 
-					$link = "http://www.katzestore.com.br/forgot/reset?code=$code";
+					$link = "http://www.hcodecommerce.com.br/forgot/reset?code=$code";
 				}
 
-				$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da Katze Store", "forgot", array(
+				$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da Hcode Store", "forgot", array(
 					"name" => $data['desperson'],
 					"link" => $link
 				));
@@ -443,7 +445,3 @@ class User extends Model
 		];
 	}
 }
-
-
-
-
