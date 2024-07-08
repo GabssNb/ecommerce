@@ -2,8 +2,8 @@
 
 namespace Hcode\Model;
 
-use \Hcode\Model;
 use \Hcode\DB\Sql;
+use \Hcode\Model;
 use \Hcode\Mailer;
 
 class Category extends Model
@@ -15,7 +15,6 @@ class Category extends Model
 		$sql = new Sql();
 
 		return $sql->select("SELECT * FROM tb_categories ORDER BY descategory");
-
 	}
 
 	public function save()
@@ -25,13 +24,12 @@ class Category extends Model
 
 		$results = $sql->select("CALL sp_categories_save(:idcategory, :descategory)", array(
 			":idcategory" => $this->getidcategory(),
-			":descategory" => $this->getdescategory(),
+			":descategory" => $this->getdescategory()
 		));
 
-		$this->setData($results[0]); 
+		$this->setData($results[0]);
 
 		Category::updateFile();
-
 	}
 
 	public function get($idcategory)
@@ -40,11 +38,10 @@ class Category extends Model
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT * FROM tb_categories WHERE idcategory = :idcategory", [
-			":idcategory"=>$idcategory
+			':idcategory' => $idcategory
 		]);
 
-		$this-> setData($results[0]);
-
+		$this->setData($results[0]);
 	}
 
 	public function delete()
@@ -53,11 +50,10 @@ class Category extends Model
 		$sql = new Sql();
 
 		$sql->query("DELETE FROM tb_categories WHERE idcategory = :idcategory", [
-        	":idcategory"=>$this->getidcategory()   
+			':idcategory' => $this->getidcategory()
 		]);
 
 		Category::updateFile();
-
 	}
 
 	public static function updateFile()
@@ -155,4 +151,52 @@ class Category extends Model
 		]);
 	}
 
+	public static function getPage($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_categories 
+			ORDER BY descategory
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data' => $results,
+			'total' => (int)$resultTotal[0]["nrtotal"],
+			'pages' => ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+	}
+
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_categories 
+			WHERE descategory LIKE :search
+			ORDER BY descategory
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search' => '%' . $search . '%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data' => $results,
+			'total' => (int)$resultTotal[0]["nrtotal"],
+			'pages' => ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+	}
 }
