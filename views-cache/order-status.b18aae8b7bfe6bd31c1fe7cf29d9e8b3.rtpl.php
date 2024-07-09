@@ -49,6 +49,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="/admin/orders" class="btn"><i class="fa fa"></i><b>Voltar</b></a>
                 </div>
             </form>
             </div>

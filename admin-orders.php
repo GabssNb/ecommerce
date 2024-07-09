@@ -46,7 +46,7 @@ $app->post("/admin/orders/:idorder/status", function($idorder){
 
 	header("Location: /admin/orders/".$idorder."/status");
 	exit;
-
+	
 });
 
 $app->get("/admin/orders/:idorder/delete", function($idorder){
