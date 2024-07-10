@@ -7,7 +7,7 @@
     {loop="$products"} 
     <input name="itemId{$counter+1}" type="hidden" value="{$value.idproduct}">  
     <input name="itemDescription{$counter+1}" type="hidden" value="{$value.desproduct}">  
-    <input name="itemAmount{$counter+1}" type="hidden" value="{$value.vltotal}">  
+    <input name="itemAmount{$counter+1}" type="hidden" value="{$cart.vltotal}">  
     <input name="itemQuantity{$counter+1}" type="hidden" value="{$value.nrqtd}">  
     <input name="itemWeight{$counter+1}" type="hidden" value="{$value.vlweight*1000}">  
     {/loop}
@@ -17,16 +17,16 @@
     <!-- Informações de frete (opcionais) -->  
     <input name="shippingType" type="hidden" value="1">
     <input name="shippingAddressPostalCode" type="hidden" value="{$order.deszipcode}">  
-    <input name="shippingAddressStreet" type="hidden" value="{function="mb_convert_encoding($order.desaddress)"}">  
-    <input name="shippingAddressNumber" type="hidden" value="{function="mb_convert_encoding($order.desnumber)"}">  
-    <input name="shippingAddressComplement" type="hidden" value="{function="mb_convert_encoding($order.descomplement)"}">  
-    <input name="shippingAddressDistrict" type="hidden" value="{function="mb_convert_encoding($order.desdistrict)"}">  
-    <input name="shippingAddressCity" type="hidden" value="{function="mb_convert_encoding($order.descity)"}">
-    <input name="shippingAddressState" type="hidden" value="{function="mb_convert_encoding($order.desstate)"}"> 
-    <input name="shippingAddressCountry" type="hidden" value="{function="mb_convert_encoding($order.descountry)"}">  
+    <input name="shippingAddressStreet" type="hidden" value="{$order.desaddress}">  
+    <input name="shippingAddressNumber" type="hidden" value="{$order.desnumber}">  
+    <input name="shippingAddressComplement" type="hidden" value="{$order.descomplement}">  
+    <input name="shippingAddressDistrict" type="hidden" value="{$order.desdistrict}">  
+    <input name="shippingAddressCity" type="hidden" value="{$order.descity}">
+    <input name="shippingAddressState" type="hidden" value="{$order.desstate}"> 
+    <input name="shippingAddressCountry" type="hidden" value="{$order.descountry}">  
 
     <!-- Dados do comprador (opcionais) -->  
-    <input name="senderName" type="hidden" value="{function="mb_convert_encoding($order.desperson)"}">  
+    <input name="senderName" type="hidden" value="{$order.desperson}">  
     <input name="senderAreaCode" type="hidden" value="{$phone.areaCode}">  
     <input name="senderPhone" type="hidden" value="{$phone.number}">  
     <input name="senderEmail" type="hidden" value="{$order.desemail}">  
