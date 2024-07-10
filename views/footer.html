@@ -5,7 +5,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
                     <h2>Katze Store</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                    <p>A Katze Store é uma empresa de compras online que oferece os melhores preços e uma experiência conveniente. Com um forte suporte em pagamento e entrega, garantimos facilidade e segurança para suas compras online. Aproveite nossas promoções diárias para encontrar tudo o que precisa!</p>
                     <div class="footer-social">
                         <a href="gabriella.nbss@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a>
                         <a href="https://instagram.com/gabss.nb" target="_blank"><i class="fa fa-instagram"></i></a>
@@ -38,7 +38,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="footer-newsletter">
                     <h2 class="footer-wid-title">Newsletter</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus!</p>
+                    <p>A empresa compreende e atende às necessidades dos clientes, oferecendo suporte eficaz para resolver suas preocupações e garantir uma experiência satisfatória.</p>
                     <div class="newsletter-form">
                         <form action="#">
                             <input type="email" placeholder="Type your email">
